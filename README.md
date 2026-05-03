@@ -43,6 +43,41 @@ Process:
 4. Capture the **runtime-generated AES-CTR key**
 5. Decrypt audio directly using native AES-CTR
 
+## Setup
+1. Clone required repositories.
+    ```bash
+    mkdir -p "${HOME}/src"
+    git clone https://github.com/cycyrild/spotify-dl-cli.git "${HOME}/src/spotify-dl-cli"
+    git clone https://github.com/cycyrild/another-unplayplay.git "${HOME}/src/another-unplayplay"
+    ```
+
+2. Create a python virtual environment. *Note: The correct path to the python binary may vary on your system*.
+    ```bash
+    /opt/homebrew/bin/python3 -m venv "${HOME}/src/spotify-dl-cli/.venv"
+    source "${HOME}/src/spotify-dl-cli/.venv/bin/activate"
+    which python # Verify
+    python -m pip install --upgrade pip setuptools wheel pytest
+    pip install -e "${HOME}/src/spotify-dl-cli"
+    which spotify-dl-cli # Verify
+    pip install -e "${HOME}/src/another-unplayplay"
+    ```
+
+3. Source `Spotify.dll` from client version `1.2.88.485` and place it at `${HOME}/src/another-unplayplay`. The SHA256 hash should be `ed3b378d428c8b1034203d62676a0e77cdae157ef70acbbd30be1ba08b8fd045`.
+    ```bash
+    sha256sum "${HOME}/src/another-unplayplay/Spotify.dll"
+    cd "${HOME}/src/another-unplayplay" && pytest -v -s && cd "${HOME}" # Verify
+    ```
+
+4. Move `Spotify.dll` to `${HOME}/src/spotify-dl-cli/spotify_dl_cli` and rename it `sp_client.dll`.
+    ```bash
+    mv "${HOME}/src/another-unplayplay/Spotify.dll" "${HOME}/src/spotify-dl-cli/spotify_dl_cli/sp_client.dll"
+    ```
+
+5. Run the program.
+    ```bash
+    spotify-dl-cli --help
+    ```
+
 ## Legal Notice
 
 This project is provided for educational, interoperability, and security research purposes only.
