@@ -78,6 +78,11 @@ Process:
     spotify-dl-cli --help
     ```
 
+## Reset Login Credentials
+```bash
+    rm "${HOME}/Library/Application Support/spotify-dl-cli/spotify_tokens.json"
+```
+
 ## Legal Notice
 
 This project is provided for educational, interoperability, and security research purposes only.
